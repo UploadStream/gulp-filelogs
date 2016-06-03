@@ -12,7 +12,16 @@ module.exports = function filelog() {
 
     return through.obj(function(file, enc, callback) {
 
-        if (file.contents.length == 0) {
+        if(file.isNull){
+            var items = [];
+
+            items.push(decorate('yellow', count));
+            items.push(decorate('cyan', file.path));
+
+            items.push(decorate('magenta', 'NOT FILE'));
+            gutil.log(items.join(''));
+        }
+        else if (file.contents.length == 0) {
             var items = [];
 
             items.push(decorate('yellow', count));
